@@ -54,8 +54,8 @@ export default function Payment() {
 
   // Billing and prefill details
   const [billingDetails, setBillingDetails] = useState({
-    name: 'Saurabh Kumar',
-    email: 'saurabh@example.com',
+    name: 'ABC',
+    email: 'ABC@gmail.com',
     phone: '9876543210',
     upiId: '',
     cardNumber: '',
@@ -145,7 +145,7 @@ export default function Payment() {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
               amount: totalPrice,
-              userId: 'saurabh_guest',
+              userId: 'ABC_guest',
               items: cart.map(({ name, price, quantity }) => ({ name, price, quantity }))
             };
 
