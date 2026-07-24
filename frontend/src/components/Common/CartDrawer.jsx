@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from '../../hooks/useLocation';
 import { formatPrice } from '../../utils/helpers';
 import api from '../../services/api';
@@ -16,31 +17,24 @@ export default function CartDrawer() {
     showToast
   } = useLocation();
 
+  const navigate = useNavigate();
   const [checkingOut, setCheckingOut] = useState(false);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (cart.length === 0) return;
-    setCheckingOut(true);
-    try {
-      const response = await api.post('/orders', {
-        items: cart.map(({ name, price, quantity }) => ({ name, price, quantity })),
+    setIsCartOpen(false);
+    navigate('/payment', {
+      state: {
+        cart,
         total: totalPrice,
         address: location.address
-      });
-      const order = response.data;
-      clearCart();
-      setIsCartOpen(false);
-      showToast(`Order ${order.id.slice(0, 8)} accepted! Rider ETA ${order.etaMinutes} min 🚀`);
-    } catch (error) {
-      console.error('Checkout failed:', error);
-      showToast('Could not place order. Please try again.');
-    } finally {
-      setCheckingOut(false);
-    }
+      }
+    });
   };
+
 
   if (!isCartOpen) return null;
 

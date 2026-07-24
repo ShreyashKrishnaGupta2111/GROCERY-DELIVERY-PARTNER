@@ -51,6 +51,8 @@ app.get('/api/orders', (req, res) => {
 
 // Location Finder endpoints
 app.use('/api', locationRoutes);
+app.use('/api/payment', require('./routes/paymentRoutes'));
+
 
 // 404 Route handler
 app.use((req, res, next) => {

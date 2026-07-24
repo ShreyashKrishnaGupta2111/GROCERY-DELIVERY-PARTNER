@@ -10,6 +10,9 @@ import Toast from './components/Common/Toast';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import About from './pages/About';
+import Payment from './pages/Payment';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentFailed from './pages/PaymentFailed';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -26,6 +29,9 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/search" element={<Search />} />
               <Route path="/about" element={<About />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/payment-failed" element={<PaymentFailed />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

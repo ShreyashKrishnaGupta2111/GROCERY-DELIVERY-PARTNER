@@ -19,6 +19,7 @@ const mapOptions = {
   streetViewControl: false,
   mapTypeControl: true, // Allow users to toggle Satellite/Map view
   fullscreenControl: true,
+  mapTypeId: 'satellite', // Show satellite mode by default
   styles: [
     {
       featureType: 'poi',
@@ -154,11 +155,17 @@ function GoogleMapCanvas({ apiKey }) {
 
   return (
     <div className="relative w-full h-full min-h-[450px]">
+      <style>{`
+        .gm-err-container {
+          display: none !important;
+        }
+      `}</style>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={13}
         center={{ lat: location.lat, lng: location.lng }}
         options={mapOptions}
+        mapTypeId="satellite"
         onLoad={handleMapLoad}
       >
         {/* User Target Marker */}
