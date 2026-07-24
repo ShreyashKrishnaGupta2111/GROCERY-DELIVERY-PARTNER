@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* Configure manual class-based dark mode toggle in Tailwind CSS v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-light: #fff6a8;
+  --color-brand: #f7d700;
+  --color-brand-strong: #f2bf00;
+  --color-ink: #17210f;
+  --color-muted: #617052;
+  --color-cream: #fffbea;
+  --color-lime: #e9ff58;
+  --color-green: #2fb344;
+  --color-green-dark: #157226;
+
+  --animate-marquee: marquee 18s linear infinite;
+  --animate-float-delay-0: float 3.4s ease-in-out infinite;
+  --animate-float-delay-1: float 3.4s ease-in-out infinite 0.5s;
+  --animate-float-delay-2: float 3.4s ease-in-out infinite 0.9s;
+  --animate-float-delay-3: float 3.4s ease-in-out infinite 1.2s;
+  --animate-pulse-slow: pulse-slow 1.5s infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(8deg); }
+  }
+  @keyframes pulse-slow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+}
+
+@layer base {
+  :root {
+    --ink: #17210f;
+    --muted: #617052;
+    --brand: #f7d700;
+    --brand-strong: #f2bf00;
+    --green: #2fb344;
+    --lime: #e9ff58;
+    --cream: #fffbea;
+    --white: #ffffff;
+    --shadow: 0 24px 80px rgba(23, 33, 15, 0.16);
+  }
+
+  /* Dark mode overrides */
+  .dark {
+    --ink: #f7f8ed;
+    --muted: #a3b396;
+    --brand: #f7d700;
+    --brand-strong: #ffea53;
+    --green: #4ade80;
+    --lime: #e9ff58;
+    --cream: #18181b;
+    --white: #27272a;
+    --shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased text-ink dark:text-zinc-200 transition-colors duration-200;
+    background: radial-gradient(circle at top left, #fff6a8, transparent 32rem), #f7f8ed;
+  }
+
+  /* Apply dark background to body in dark mode */
+  .dark body {
+    background: radial-gradient(circle at top left, #1c1c1e, transparent 36rem), #09090b;
+  }
+}
+
+@layer utilities {
+  .bg-radial-gradient {
+    background: radial-gradient(circle at top left, #fff6a8, transparent 32rem), #f7f8ed;
+  }
+  .dark .bg-radial-gradient {
+    background: radial-gradient(circle at top left, #1c1c1e, transparent 36rem), #09090b;
+  }
+}
+
+/* Custom CSS Transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
