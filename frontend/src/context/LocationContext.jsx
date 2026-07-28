@@ -56,12 +56,19 @@ export const LocationProvider = ({ children }) => {
         const response = await api.get('/config');
         if (response.data && response.data.googleMapsApiKey) {
           setApiKey(response.data.googleMapsApiKey);
+          setLoadingConfig(false);
+          return;
         }
       } catch (err) {
-        console.error('Failed to load Google Maps configuration:', err);
-      } finally {
-        setLoadingConfig(false);
+        console.warn('Failed to load Google Maps configuration from backend. Checking client env fallback:', err.message);
       }
+      
+      // Fallback to client-side env variable if backend is down or not providing a key
+      const envKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+      if (envKey) {
+        setApiKey(envKey);
+      }
+      setLoadingConfig(false);
     }
     loadConfig();
   }, []);

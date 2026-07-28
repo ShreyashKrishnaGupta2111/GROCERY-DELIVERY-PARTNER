@@ -253,7 +253,7 @@ function GoogleMapCanvas({ apiKey }) {
 
 // Outer wrapper managing configuration loading
 export default function Map() {
-  const { apiKey, loadingConfig } = useLocation();
+  const { apiKey, loadingConfig, location, nearbyStores } = useLocation();
 
   if (loadingConfig) {
     return (
@@ -266,6 +266,11 @@ export default function Map() {
     );
   }
 
-  // Always render the actual Google Map canvas. If loading fails, the inner component will show the fallback.
-  return <GoogleMapCanvas apiKey={apiKey || ''} />;
+  const hasApiKey = apiKey && apiKey.trim() && apiKey !== 'LyBIp7Yfo8xtLJRdQXNC';
+
+  if (!hasApiKey) {
+    return <OfflineFallback location={location} nearbyStores={nearbyStores} />;
+  }
+
+  return <GoogleMapCanvas apiKey={apiKey} />;
 }
